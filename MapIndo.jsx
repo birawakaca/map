@@ -11,14 +11,14 @@ import {
 } from "react-simple-maps";
 import { Table } from "reactstrap";
 
-//const geoUrl = "/provinces-simplified-topo.json";
+const geoUrl = "/provinces-simplified-topo.json";
 //const geoUrl = "/indonesia-topojson-city-regency.json";
 //const geoUrl = "/indonesia-province-simple.json";
 //const geoUrl = "/map-indonesia-provinsi.json";
-const geoUrl = "/indonesia-prov.json";
+//const geoUrl = "/indonesia-prov.json";
 
 const colorScale = scaleLinear()
-  .domain([0, 13])
+  .domain([0, 2021])
   .range(["#ffedea", "#ff5233"]);
 
 const MapIndo = () => {
@@ -56,7 +56,7 @@ const MapIndo = () => {
               <Geography
                 key={geo.rsmKey}
                 geography={geo}
-                fill={d ? colorScale(d["penghasilan"]) : "#F5F4F6"}
+                fill={d ? colorScale(d["extgl_Lulus[0]"]) : "#F5F4F6"}
                 // fill={colorScale(Math.random())}
               />
             );
@@ -73,16 +73,16 @@ const MapIndo = () => {
           No
         </th>
         <th>
-          Name Provinsi
+          Nama
         </th>
         <th>
-          Name Kab/Kota
+          Nama prodi
         </th>
         <th>
-          Lama Sekolah
+          Nama Provinsi
         </th>
         <th>
-          Tahun
+          Tahun Lulus
         </th>
       </tr>
     );
@@ -92,7 +92,8 @@ const MapIndo = () => {
     let id = 0;
     let item = data.map((item, index) => {
       id += 1;
-      const {nama, nm_prodi, nm_propinsi, penghasilan} = item;
+      const {nama, nm_prodi, nm_propinsi, tgl_lulus} = item;
+      var extgl_Lulus = tgl_lulus.split("-");
       console.log(item);
       // return "MM";
       return (
@@ -110,7 +111,7 @@ const MapIndo = () => {
             { nm_propinsi }
           </td>
           <td>
-            { penghasilan }
+            { extgl_Lulus[0] }
           </td>
         </tr>
       );
