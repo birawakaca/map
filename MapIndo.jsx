@@ -11,6 +11,8 @@ import {
 } from "react-simple-maps";
 import { Table } from "reactstrap";
 
+
+
 const geoUrl = "/provinces-simplified-topo.json";
 //const geoUrl = "/indonesia-topojson-city-regency.json";
 //const geoUrl = "/indonesia-province-simple.json";
@@ -143,7 +145,12 @@ const MapIndo = () => {
       id += 1;
       const {nim, nama, nm_prodi, nm_propinsi, tgl_lulus} = item;
       var extgl_Lulus = tgl_lulus.split("-");
-      nm_propinsi === "Prov. Jawa Tengah" ? nm_propinsi + (count[0]+=1): nm_propinsi;
+      if (nm_propinsi === "Prov. Jawa Tengah") {
+        count[0]+=1;
+      }
+      if (nm_propinsi === "Prov. Jawa Timur") {
+        count[1]+=1;
+      }
       
       console.log(item);
       // return "MM";
@@ -174,7 +181,8 @@ const MapIndo = () => {
   const dataAlumni = () => {
     return (
       <div>
-        { count[0] }
+        <div>{ count[0] }</div>
+        <div>{ count[1] }</div>
       </div>
     )
 
