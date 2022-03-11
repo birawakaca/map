@@ -18,11 +18,12 @@ const geoUrl = "/provinces-simplified-topo.json";
 //const geoUrl = "/indonesia-prov.json";
 
 const colorScale = scaleLinear()
-  .domain([0, 2021])
+  .domain([0, 1])
   .range(["#ffedea", "#ff5233"]);
 
 const MapIndo = () => {
   const [data, setData] = useState([]);
+  const [dataProv, setData2] = useState([]);
   const [position, setPosition] = useState({ coordinates: [117.83252071571, -3.4143807925324428], zoom: 11 });
   const [tableHeader, setTableHeader] = useState([
 
@@ -88,12 +89,62 @@ const MapIndo = () => {
     );
   }
 
+  const count = [0, 0, 0]
+  
+  
+
   const dataTable = () => {
     let id = 0;
+
+    
+    /*
+    const count = ["Aceh"
+    ,"Bali"
+    ,"Bangka Belitung"
+    ,"Bengkulu"
+    ,"Banten"
+    ,"D.K.I. Jakarta"
+    ,"Gorontalo"
+    ,"Jambi"
+    ,"Jawa Barat"
+    ,"Jawa Timur"
+    ,"Jawa Tengah"
+    ,"Kalimantan Barat"
+    ,"Kalimantan Timur"
+    ,"Kepulauan Riau"
+    ,"Kalimantan Selatan"
+    ,"Kalimantan Tengah"
+    ,"Kalimantan Utara"
+    ,"Lampung"
+    ,"Maluku"
+    ,"Maluku Utara"
+    ,"Nusa Tenggara Barat"
+    ,"Nusa Tenggara Timur"
+    ,"Papua"
+    ,"Papua Barat"
+    ,"Riau"
+    ,"Sulawesi Utara"
+    ,"Sumatera Barat"
+    ,"Sulawesi Tenggara"
+    ,"Sulawesi Selatan"
+    ,"Sulawesi Barat"
+    ,"Sumatera Selatan"
+    ,"Sulawesi Tengah"
+    ,"Sumatera Utara"
+    ,"D.I. Yogyakarta"]
+    
+    let item2 = dataProv.map((item2, index2) => {
+        const {nm_propinsi} = item2;
+        console.log(item2);
+        return ( { nm_propinsi } )
+    })
+    */
     let item = data.map((item, index) => {
       id += 1;
-      const {nama, nm_prodi, nm_propinsi, tgl_lulus} = item;
+      const {nim, nama, nm_prodi, nm_propinsi, tgl_lulus} = item;
       var extgl_Lulus = tgl_lulus.split("-");
+      nm_propinsi === "Prov. Jawa Tengah" ? nm_propinsi + (count[0]+=1): nm_propinsi;
+      
       console.log(item);
       // return "MM";
       return (
@@ -108,7 +159,7 @@ const MapIndo = () => {
             { nm_prodi }
           </td>
           <td>
-            { nm_propinsi }
+            {  }
           </td>
           <td>
             { extgl_Lulus[0] }
@@ -118,10 +169,44 @@ const MapIndo = () => {
     })
     return item;
   }
+  
+  
+  const dataAlumni = () => {
+    return (
+      <div>
+        { count[0] }
+      </div>
+    )
+
+    /*
+        
+    let item = data.map((item, index) => {
+      const {nim, nama, nm_prodi, nm_propinsi, tgl_lulus} = item;
+      var extgl_Lulus = tgl_lulus.split("-");
+      
+      
+      console.log(item);
+      //nm_propinsi === "Prov. Jawa Tengah" ? nm_propinsi + (count[0]+=1): nm_propinsi;
+      // return "MM";
+      return (
+        <div>
+          { nm_propinsi === "Prov. Jawa Tengah" ? nm_propinsi + (count[0]+=1): nm_propinsi }
+        </div>
+      );
+      return(<div> {count[0]} </div>);
+      
+    })
+    return item;
+    */
+    
+  }
 
   useEffect(() => {
     csv(`Tracer Wirausaha_edit.csv`).then((data) => {
       setData(data);
+    });
+    csv(`indonesia-provinasi.csv`).then((dataProv) => {
+      setData2(dataProv);
     });
   }, []);
 
@@ -172,6 +257,7 @@ const MapIndo = () => {
           </svg>
         </button>
       </div>
+      
       <div>
       <Table bordered>
         <thead>
@@ -181,6 +267,10 @@ const MapIndo = () => {
           { dataTable() }
         </tbody>
       </Table>
+      </div>
+
+      <div>
+        { dataAlumni() }
       </div>
     </div> 
   );
