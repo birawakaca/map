@@ -32,6 +32,6 @@ function csvToJson($fname) {
     
 }
 
-print(csvToJson("file/Tracer Wirausaha_edit.csv"));
+print(csvToJson("file/.....csv"));
 
 ?>
